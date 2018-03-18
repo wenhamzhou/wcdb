@@ -31,6 +31,8 @@
 #pragma mark - Get Object
 - (id /* WCTObject* */)getOneObject;
 
+- (id /* WCTObject* */)getOneObjectRowID:(const UInt64)rowid;
+
 - (id /* WCTObject* */)getOneObjectWhere:(const WCTCondition &)condition;
 
 - (id /* WCTObject* */)getOneObjectOrderBy:(const WCDB::OrderList &)order;

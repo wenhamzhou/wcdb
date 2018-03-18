@@ -40,6 +40,8 @@ typedef std::function<void(
 typedef std::function<void(const std::string &)> SQLTrace;
 
 typedef std::function<void(Handle *, int, void *)> CommittedHook;
+    
+typedef std::function<void(Handle *, int, char const *, char const *, int64_t, void *)> UpdatedHook;
 
 class Handle {
 public:
@@ -74,6 +76,8 @@ public:
     const Error &getError() const;
 
     void registerCommittedHook(const CommittedHook &onCommitted, void *info);
+    
+    void registerUpdatedHook(const UpdatedHook &onUpdated, void *info);
 
     static const std::string backupSuffix;
 
@@ -99,6 +103,13 @@ protected:
         Handle *handle;
     } CommittedHookInfo;
     CommittedHookInfo m_committedHookInfo;
+    
+    typedef struct {
+        UpdatedHook onUpdated;
+        void *info;
+        Handle *handle;
+    } UpdatedHookInfo;
+    UpdatedHookInfo m_updatedHookInfo;
 
     void setupTrace();
     PerformanceTrace m_performanceTrace;

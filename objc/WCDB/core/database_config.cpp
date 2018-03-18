@@ -36,8 +36,10 @@ const std::string Database::defaultTraceConfigName = "trace";
 const std::string Database::defaultCheckpointConfigName = "checkpoint";
 const std::string Database::defaultSynchronousConfigName = "synchronous";
 const std::string Database::defaultTokenizeConfigName = "tokenize";
+const std::string Database::defaultUpdateHookConfigName = "updatehook";
 std::shared_ptr<PerformanceTrace> Database::s_globalPerformanceTrace = nullptr;
 std::shared_ptr<SQLTrace> Database::s_globalSQLTrace = nullptr;
+std::shared_ptr<UpdatedHook> Database::s_globalUpdatedHook = nullptr;
 
 const Configs Database::defaultConfigs(
     {{
@@ -234,6 +236,19 @@ const Configs Database::defaultConfigs(
          Database::defaultTokenizeConfigName,
          nullptr, //placeholder
          (Configs::Order) Database::ConfigOrder::Tokenize,
+     },
+     {
+         Database::defaultUpdateHookConfigName,
+         [](std::shared_ptr<Handle> &handle, Error &error) -> bool {
+             {
+                 std::shared_ptr<UpdatedHook> hook = s_globalUpdatedHook;
+                 if (hook) {
+                     handle->registerUpdatedHook(*hook.get(), nullptr);;
+                 }
+             }
+             return true;
+         },
+         (Configs::Order) Database::ConfigOrder::UpdateHook,
      }});
 
 void Database::setConfig(const std::string &name,
@@ -285,6 +300,16 @@ void Database::setPerformanceTrace(const PerformanceTrace &trace)
             handle->setPerformanceTrace(trace);
             return true;
         });
+}
+    
+void Database::setUpdateHook(const UpdatedHook &updateHook)
+{
+    m_pool->setConfig(
+                      Database::defaultUpdateHookConfigName,
+                      [updateHook](std::shared_ptr<Handle> &handle, Error &error) -> bool {
+                          handle->registerUpdatedHook(updateHook, nullptr);
+                          return true;
+                      });
 }
 
 void Database::setSynchronousFull(bool full)
@@ -364,6 +389,11 @@ void Database::SetGlobalPerformanceTrace(const PerformanceTrace &globalTrace)
 void Database::SetGlobalSQLTrace(const SQLTrace &globalTrace)
 {
     s_globalSQLTrace.reset(new SQLTrace(globalTrace));
+}
+    
+void Database::SetGlobalUpdateHook(const UpdatedHook &globalUpdateHook)
+{
+    s_globalUpdatedHook.reset(new UpdatedHook(globalUpdateHook));
 }
 
 } //namespace WCDB

@@ -71,7 +71,7 @@
 
 - (WCTSelect *)prepareSelectObjects
 {
-    return [[WCTSelect alloc] initWithCore:_core andResults:[_cls AllProperties] fromTable:_tableName];
+    return [[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName];
 }
 
 - (WCTSelect *)prepareSelectObjectsOnResults:(const WCTResultList &)resultList

@@ -41,47 +41,52 @@
 #pragma mark - Get Object
 - (id /* WCTObject* */)getOneObject
 {
-    return [[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllProperties] fromTable:_tableName] limit:1] nextObject];
+    return [[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName] limit:1] nextObject];
+}
+
+- (id /* WCTObject* */)getOneObjectRowID:(const UInt64)rowid
+{
+    return [[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName] where:[_cls RowIDProperty] == rowid] nextObject];
 }
 
 - (id /* WCTObject* */)getOneObjectWhere:(const WCTCondition &)condition
 {
-    return [[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllProperties] fromTable:_tableName] where:condition] limit:1] nextObject];
+    return [[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName] where:condition] limit:1] nextObject];
 }
 
 - (id /* WCTObject* */)getOneObjectOrderBy:(const WCDB::OrderList &)order
 {
-    return [[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllProperties] fromTable:_tableName] orderBy:order] limit:1] nextObject];
+    return [[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName] orderBy:order] limit:1] nextObject];
 }
 
 - (id /* WCTObject* */)getOneObjectOffset:(const WCTOffset &)offset
 {
-    return [[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllProperties] fromTable:_tableName] limit:1] offset:offset] nextObject];
+    return [[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName] limit:1] offset:offset] nextObject];
 }
 
 - (id /* WCTObject* */)getOneObjectWhere:(const WCTCondition &)condition
                                  orderBy:(const WCDB::OrderList &)order
 {
-    return [[[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllProperties] fromTable:_tableName] where:condition] limit:1] orderBy:order] nextObject];
+    return [[[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName] where:condition] limit:1] orderBy:order] nextObject];
 }
 
 - (id /* WCTObject* */)getOneObjectWhere:(const WCTCondition &)condition
                                   offset:(const WCTOffset &)offset
 {
-    return [[[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllProperties] fromTable:_tableName] where:condition] limit:1] offset:offset] nextObject];
+    return [[[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName] where:condition] limit:1] offset:offset] nextObject];
 }
 
 - (id /* WCTObject* */)getOneObjectOrderBy:(const WCDB::OrderList &)order
                                     offset:(const WCTOffset &)offset
 {
-    return [[[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllProperties] fromTable:_tableName] orderBy:order] limit:1] offset:offset] nextObject];
+    return [[[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName] orderBy:order] limit:1] offset:offset] nextObject];
 }
 
 - (id /* WCTObject* */)getOneObjectWhere:(const WCTCondition &)condition
                                  orderBy:(const WCDB::OrderList &)order
                                   offset:(const WCTOffset &)offset
 {
-    return [[[[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllProperties] fromTable:_tableName] where:condition] orderBy:order] limit:1] offset:offset] nextObject];
+    return [[[[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName] where:condition] orderBy:order] limit:1] offset:offset] nextObject];
 }
 
 #pragma mark - Get Part Of Object
@@ -549,91 +554,91 @@
 #pragma mark - Get Objects
 - (NSArray /* <WCTObject*> */ *)getAllObjects
 {
-    return [[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllProperties] fromTable:_tableName] allObjects];
+    return [[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName] allObjects];
 }
 
 - (NSArray /* <WCTObject*> */ *)getObjectsWhere:(const WCTCondition &)condition
 {
-    return [[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllProperties] fromTable:_tableName] where:condition] allObjects];
+    return [[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName] where:condition] allObjects];
 }
 
 - (NSArray /* <WCTObject*> */ *)getObjectsOrderBy:(const WCDB::OrderList &)order
 {
-    return [[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllProperties] fromTable:_tableName] orderBy:order] allObjects];
+    return [[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName] orderBy:order] allObjects];
 }
 
 - (NSArray /* <WCTObject*> */ *)getObjectsLimit:(const WCTLimit &)limit
 {
-    return [[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllProperties] fromTable:_tableName] limit:limit] allObjects];
+    return [[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName] limit:limit] allObjects];
 }
 
 - (NSArray /* <WCTObject*> */ *)getObjectsOffset:(const WCTOffset &)offset
 {
-    return [[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllProperties] fromTable:_tableName] offset:offset] allObjects];
+    return [[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName] offset:offset] allObjects];
 }
 
 - (NSArray /* <WCTObject*> */ *)getObjectsWhere:(const WCTCondition &)condition
                                         orderBy:(const WCDB::OrderList &)order
 {
-    return [[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllProperties] fromTable:_tableName] where:condition] orderBy:order] allObjects];
+    return [[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName] where:condition] orderBy:order] allObjects];
 }
 
 - (NSArray /* <WCTObject*> */ *)getObjectsWhere:(const WCTCondition &)condition
                                           limit:(const WCTLimit &)limit
 {
-    return [[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllProperties] fromTable:_tableName] where:condition] limit:limit] allObjects];
+    return [[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName] where:condition] limit:limit] allObjects];
 }
 
 - (NSArray /* <WCTObject*> */ *)getObjectsWhere:(const WCTCondition &)condition
                                          offset:(const WCTOffset &)offset
 {
-    return [[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllProperties] fromTable:_tableName] where:condition] offset:offset] allObjects];
+    return [[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName] where:condition] offset:offset] allObjects];
 }
 
 - (NSArray /* <WCTObject*> */ *)getObjectsOrderBy:(const WCDB::OrderList &)order
                                             limit:(const WCTLimit &)limit
 {
-    return [[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllProperties] fromTable:_tableName] orderBy:order] limit:limit] allObjects];
+    return [[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName] orderBy:order] limit:limit] allObjects];
 }
 
 - (NSArray /* <WCTObject*> */ *)getObjectsOrderBy:(const WCDB::OrderList &)order
                                            offset:(const WCTOffset &)offset
 {
-    return [[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllProperties] fromTable:_tableName] orderBy:order] offset:offset] allObjects];
+    return [[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName] orderBy:order] offset:offset] allObjects];
 }
 
 - (NSArray /* <WCTObject*> */ *)getObjectsLimit:(const WCTOffset &)offset
                                          offset:(const WCTLimit &)limit
 {
-    return [[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllProperties] fromTable:_tableName] limit:limit] offset:offset] allObjects];
+    return [[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName] limit:limit] offset:offset] allObjects];
 }
 
 - (NSArray /* <WCTObject*> */ *)getObjectsWhere:(const WCTCondition &)condition
                                         orderBy:(const WCDB::OrderList &)order
                                           limit:(const WCTLimit &)limit
 {
-    return [[[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllProperties] fromTable:_tableName] where:condition] orderBy:order] limit:limit] allObjects];
+    return [[[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName] where:condition] orderBy:order] limit:limit] allObjects];
 }
 
 - (NSArray /* <WCTObject*> */ *)getObjectsWhere:(const WCTCondition &)condition
                                         orderBy:(const WCDB::OrderList &)order
                                          offset:(const WCTOffset &)offset
 {
-    return [[[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllProperties] fromTable:_tableName] where:condition] orderBy:order] offset:offset] allObjects];
+    return [[[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName] where:condition] orderBy:order] offset:offset] allObjects];
 }
 
 - (NSArray /* <WCTObject*> */ *)getObjectsWhere:(const WCTCondition &)condition
                                           limit:(const WCTLimit &)limit
                                          offset:(const WCTOffset &)offset
 {
-    return [[[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllProperties] fromTable:_tableName] where:condition] limit:limit] offset:offset] allObjects];
+    return [[[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName] where:condition] limit:limit] offset:offset] allObjects];
 }
 
 - (NSArray /* <WCTObject*> */ *)getObjectsOrderBy:(const WCDB::OrderList &)order
                                             limit:(const WCTLimit &)limit
                                            offset:(const WCTOffset &)offset
 {
-    return [[[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllProperties] fromTable:_tableName] orderBy:order] limit:limit] offset:offset] allObjects];
+    return [[[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName] orderBy:order] limit:limit] offset:offset] allObjects];
 }
 
 - (NSArray /* <WCTObject*> */ *)getObjectsWhere:(const WCTCondition &)condition
@@ -641,7 +646,7 @@
                                           limit:(const WCTLimit &)limit
                                          offset:(const WCTOffset &)offset
 {
-    return [[[[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllProperties] fromTable:_tableName] where:condition] orderBy:order] limit:limit] offset:offset] allObjects];
+    return [[[[[[[WCTSelect alloc] initWithCore:_core andResults:[_cls AllPropertiesWithRowID] fromTable:_tableName] where:condition] orderBy:order] limit:limit] offset:offset] allObjects];
 }
 
 #pragma mark - Get Part Of Objects

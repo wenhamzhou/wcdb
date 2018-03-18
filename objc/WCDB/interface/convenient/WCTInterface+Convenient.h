@@ -34,6 +34,10 @@
 
 - (id /* WCTObject* */)getOneObjectOfClass:(Class)cls
                                  fromTable:(NSString *)tableName
+                                     rowid:(const UInt64)rowid;
+
+- (id /* WCTObject* */)getOneObjectOfClass:(Class)cls
+                                 fromTable:(NSString *)tableName
                                      where:(const WCTCondition &)condition;
 
 - (id /* WCTObject* */)getOneObjectOfClass:(Class)cls

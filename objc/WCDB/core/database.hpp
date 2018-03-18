@@ -59,6 +59,7 @@ public:
         Synchronous = 3,
         Checkpoint = 4,
         Tokenize = 5,
+        UpdateHook = 6,
     };
     static const std::string defaultBasicConfigName;
     static const std::string defaultCipherConfigName;
@@ -66,6 +67,7 @@ public:
     static const std::string defaultCheckpointConfigName;
     static const std::string defaultSynchronousConfigName;
     static const std::string defaultTokenizeConfigName;
+    static const std::string defaultUpdateHookConfigName;
     static const Configs defaultConfigs;
     void setConfig(const std::string &name,
                    const Config &config,
@@ -75,8 +77,10 @@ public:
     void setSynchronousFull(bool full);
     void setTokenizes(const std::list<std::string> &tokenizeNames);
     void setPerformanceTrace(const PerformanceTrace &trace);
+    void setUpdateHook(const UpdatedHook &updateHook);
     static void SetGlobalPerformanceTrace(const PerformanceTrace &globalTrace);
     static void SetGlobalSQLTrace(const SQLTrace &globalTrace);
+    static void SetGlobalUpdateHook(const UpdatedHook &globalUpdateHook);
 
     //file
     bool moveFiles(const std::string &directory, Error &error);
@@ -122,6 +126,7 @@ protected:
 
     static std::shared_ptr<PerformanceTrace> s_globalPerformanceTrace;
     static std::shared_ptr<SQLTrace> s_globalSQLTrace;
+    static std::shared_ptr<UpdatedHook> s_globalUpdatedHook;
 };
 
 } //namespace WCDB

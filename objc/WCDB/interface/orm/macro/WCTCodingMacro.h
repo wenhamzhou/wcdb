@@ -30,6 +30,7 @@
 #define WCDB_IMPLEMENTATION(className)                                         \
     static WCTBinding __WCDB_BINDING(className)(className.class);              \
     static WCTPropertyList __WCDB_PROPERTIES(className);                       \
+    @synthesize rowid;                                                         \
     +(const WCTBinding *) objectRelationalMappingForWCDB                       \
     {                                                                          \
         if (self.class != className.class) {                                   \
@@ -40,6 +41,17 @@
     +(const WCTPropertyList &) AllProperties                                   \
     {                                                                          \
         return __WCDB_PROPERTIES(className);                                   \
+    }                                                                          \
+    +(const WCTPropertyList &) AllPropertiesWithRowID                          \
+    {                                                                          \
+        static WCTPropertyList allPropertiesWithRowID(__WCDB_PROPERTIES(className));                 \
+        static const bool oneToken = (allPropertiesWithRowID.push_back([self RowIDProperty]),true);  \
+        return allPropertiesWithRowID;                                         \
+    }                                                                          \
+    +(const WCTRowIDProperty &) RowIDProperty                                  \
+    {                                                                          \
+        static const WCTRowIDProperty s_rowidProperty(className.class);        \
+        return s_rowidProperty;                                                \
     }                                                                          \
     +(const WCTAnyProperty &) AnyProperty                                      \
     {                                                                          \

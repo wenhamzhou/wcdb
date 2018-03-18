@@ -106,6 +106,7 @@
     }
     int index;
     BOOL fillLastInsertedRowID = [objects[0] respondsToSelector:@selector(lastInsertedRowID)];
+    BOOL fillRowID = [objects[0] respondsToSelector:@selector(rowid)];
     for (WCTObject *object in objects) {
         index = 1;
         for (const WCTProperty &property : _propertyList) {
@@ -128,9 +129,15 @@
             error = statementHandle->getError();
             return NO;
         }
+        
+        long long rowid = statementHandle->getLastInsertedRowID();
         if (fillLastInsertedRowID) {
-            object.lastInsertedRowID = statementHandle->getLastInsertedRowID();
+            object.lastInsertedRowID = rowid;
         }
+        if(fillRowID){
+            object.rowid = rowid;
+        }
+        
         statementHandle->reset();
         if (!statementHandle->isOK()) {
             error = statementHandle->getError();

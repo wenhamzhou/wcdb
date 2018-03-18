@@ -43,6 +43,7 @@
 
 #import <WCDB/WCTDatabase+Core.h>
 #import <WCDB/WCTInterface+Core.h>
+#import <WCDB/WCTDatabase+UpdateHook.h>
 
 #import <WCDB/WCTDatabase+Database.h>
 #import <WCDB/WCTDatabase+FTS.h>
@@ -54,6 +55,7 @@
 #import <WCDB/WCTTable.h>
 
 #import <WCDB/WCTAnyProperty.h>
+#import <WCDB/WCTRowIDProperty.h>
 #import <WCDB/WCTExpr.h>
 #import <WCDB/WCTORM.h>
 #import <WCDB/WCTProperty.h>

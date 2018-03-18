@@ -70,7 +70,7 @@
 
 - (WCTSelect *)prepareSelectObjectsOfClass:(Class)cls fromTable:(NSString *)tableName
 {
-    return [[WCTSelect alloc] initWithCore:_core andResults:[cls AllProperties] fromTable:tableName];
+    return [[WCTSelect alloc] initWithCore:_core andResults:[cls AllPropertiesWithRowID] fromTable:tableName];
 }
 
 - (WCTSelect *)prepareSelectObjectsOnResults:(const WCTResultList &)resultList fromTable:(NSString *)tableName

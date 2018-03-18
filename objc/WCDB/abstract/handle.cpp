@@ -286,6 +286,24 @@ void Handle::registerCommittedHook(const CommittedHook &onCommitted, void *info)
         sqlite3_wal_hook((sqlite3 *) m_handle, nullptr, nullptr);
     }
 }
+    
+void Handle::registerUpdatedHook(const UpdatedHook &onUpdated, void *info)
+{
+    m_updatedHookInfo.onUpdated = onUpdated;
+    m_updatedHookInfo.info = info;
+    m_updatedHookInfo.handle = this;
+    if (m_updatedHookInfo.onUpdated) {
+        sqlite3_update_hook(
+                         (sqlite3 *) m_handle,
+                         [](void* p, int op, char const * zDb, char const * zName, int64_t nKey) -> void {
+                             UpdatedHookInfo *updatedHookInfo = (UpdatedHookInfo *)p;
+                             updatedHookInfo->onUpdated(updatedHookInfo->handle, op, zDb, zName, nKey, updatedHookInfo->info);
+                         },
+                         &m_updatedHookInfo);
+    } else {
+        sqlite3_update_hook((sqlite3 *) m_handle, nullptr, nullptr);
+    }
+}
 
 std::string Handle::getBackupPath() const
 {
