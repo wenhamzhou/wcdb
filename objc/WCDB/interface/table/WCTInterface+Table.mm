@@ -161,4 +161,17 @@
                        error);
 }
 
+- (BOOL)createTriggerOfName:(NSString *)triggerName type:(WCTTriggerType)type when:(const WCTCondition &)when forTable:(NSString *)tableName statement:(const WCDB::Statement &)statement andError:(WCDB::Error &)error
+{
+    return _core->exec(WCDB::StatementCreateTrigger().create(triggerName.UTF8String, type, tableName.UTF8String, when, statement),
+                       error);
+}
+
+- (BOOL)dropTriggerOfName:(NSString *)triggerName withError:(WCDB::Error &)error
+{
+    return _core->exec(WCDB::StatementDropTrigger()
+                       .drop(triggerName.UTF8String),
+                       error);
+}
+
 @end

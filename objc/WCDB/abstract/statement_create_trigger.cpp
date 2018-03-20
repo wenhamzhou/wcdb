@@ -18,46 +18,32 @@
  * limitations under the License.
  */
 
-#ifndef statement_hpp
-#define statement_hpp
+#include <WCDB/statement_create_trigger.hpp>
 
-#include <WCDB/describable.hpp>
+const char * TriggerDescriptions[] = { "",
+    "BEFORE INSERT ",
+    "AFTER INSERT ",
+    "BEFORE UPDATE ",
+    "AFTER UPDATE ",
+    "BEFORE DELETE ",
+    "AFTER DELETE ",
+    "INSTEAD OF INSERT ",
+    "INSTEAD OF DELETE ",
+    "INSTEAD OF UPDATE " };
 
 namespace WCDB {
 
-class Statement : public Describable {
-public:
-    enum class Type : int {
-        None = 0,
-        AlterTable,
-        CreateIndex,
-        CreateTable,
-        Delete,
-        DropIndex,
-        DropTable,
-        Insert,
-        Pragma,
-        Select,
-        Transaction,
-        Update,
-        CreateVirtualTable,
-        Attach,
-        Detach,
-        Explain,
-        Savepoint,
-        Release,
-        Rollback,
-        Vacuum,
-        Reindex,
-        CreateTrigger,
-        DropTrigger,
-        Trigger,
-    };
-    Statement();
-    virtual ~Statement();
-    virtual Statement::Type getStatementType() const = 0;
-};
+Statement::Type StatementCreateTrigger::getStatementType() const
+{
+    return Statement::Type::CreateTrigger;
+}
+    
+std::string StatementCreateTrigger::getDescriptionOfType(StatementCreateTrigger::Type type){
+    unsigned int typeIntValue = (unsigned int)type;
+    if(typeIntValue <= 9){
+        return TriggerDescriptions[typeIntValue];
+    }
+    return "";
+}
 
 } //namespace WCDB
-
-#endif /* statement_hpp */

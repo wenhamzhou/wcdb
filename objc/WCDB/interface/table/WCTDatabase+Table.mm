@@ -82,6 +82,19 @@
     return [self dropIndexOfName:indexName withError:innerError];
 }
 
+- (BOOL)createTriggerOfName:(NSString *)triggerName type:(WCTTriggerType)type when:(const WCTCondition &)when forTable:(NSString *)tableName statement:(const WCDB::Statement &)statement
+{
+    WCDB::Error innerError;
+    return [self createTriggerOfName:triggerName type:type when:when forTable:tableName statement:statement andError:innerError];
+}
+
+- (BOOL)dropTriggerOfName:(NSString *)triggerName
+{
+    WCDB::Error innerError;
+    return [self dropTriggerOfName:triggerName withError:innerError];
+}
+
+
 - (BOOL)addColumn:(const WCTColumnDef &)columnDef forTable:(NSString *)tableName
 {
     WCDB::Error innerError;

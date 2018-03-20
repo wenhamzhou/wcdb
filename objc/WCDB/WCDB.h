@@ -44,6 +44,7 @@
 #import <WCDB/WCTDatabase+Core.h>
 #import <WCDB/WCTInterface+Core.h>
 #import <WCDB/WCTDatabase+UpdateHook.h>
+#import <WCDB/WCTDatabase+CreateFunction.h>
 
 #import <WCDB/WCTDatabase+Database.h>
 #import <WCDB/WCTDatabase+FTS.h>

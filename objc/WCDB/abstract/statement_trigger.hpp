@@ -18,46 +18,22 @@
  * limitations under the License.
  */
 
-#ifndef statement_hpp
-#define statement_hpp
+#ifndef statement_trigger_hpp
+#define statement_trigger_hpp
 
-#include <WCDB/describable.hpp>
+#include <WCDB/declare.hpp>
+#include <WCDB/statement.hpp>
+#include <WCDB/expr.hpp>
 
 namespace WCDB {
 
-class Statement : public Describable {
+class StatementTrigger : public Statement {
 public:
-    enum class Type : int {
-        None = 0,
-        AlterTable,
-        CreateIndex,
-        CreateTable,
-        Delete,
-        DropIndex,
-        DropTable,
-        Insert,
-        Pragma,
-        Select,
-        Transaction,
-        Update,
-        CreateVirtualTable,
-        Attach,
-        Detach,
-        Explain,
-        Savepoint,
-        Release,
-        Rollback,
-        Vacuum,
-        Reindex,
-        CreateTrigger,
-        DropTrigger,
-        Trigger,
-    };
-    Statement();
-    virtual ~Statement();
-    virtual Statement::Type getStatementType() const = 0;
+    StatementTrigger &createTriggerWithNew(const std::string triggerCallBackName,  const std::list<const std::string> &columnNameList);
+    StatementTrigger &createTriggerWithOld(const std::string triggerCallBackName,  const std::list<const std::string> &columnNameList);
+    virtual Statement::Type getStatementType() const override;
 };
 
 } //namespace WCDB
 
-#endif /* statement_hpp */
+#endif /* statement_trigger_hpp */

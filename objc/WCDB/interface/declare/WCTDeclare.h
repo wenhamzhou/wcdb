@@ -134,5 +134,6 @@ typedef NS_ENUM(int, WCTValueType) {
 typedef NSArray<WCTValue *> WCTOneRow;
 typedef NSArray<WCTValue *> WCTOneColumn;
 typedef NSArray<NSArray<WCTValue *> *> WCTColumnsXRows;
+typedef WCDB::StatementCreateTrigger::Type WCTTriggerType;
 
 @class WCTError;

@@ -42,7 +42,9 @@ typedef std::function<void(const std::string &)> SQLTrace;
 typedef std::function<void(Handle *, int, void *)> CommittedHook;
     
 typedef std::function<void(Handle *, int, char const *, char const *, int64_t, void *)> UpdatedHook;
-
+    
+typedef std::function<void(Handle * handle, void* sqlite3_content, int argc, void** argv)> CustomFunction;
+    
 class Handle {
 public:
     Handle(const std::string &path);
@@ -78,6 +80,8 @@ public:
     void registerCommittedHook(const CommittedHook &onCommitted, void *info);
     
     void registerUpdatedHook(const UpdatedHook &onUpdated, void *info);
+    
+    void createFunction(const char *zFunctionName, const CustomFunction &function, void *info);
 
     static const std::string backupSuffix;
 
@@ -110,6 +114,13 @@ protected:
         Handle *handle;
     } UpdatedHookInfo;
     UpdatedHookInfo m_updatedHookInfo;
+    
+    typedef struct {
+        CustomFunction customFunction;
+        void *info;
+        Handle *handle;
+    } CustomFunctionInfo;
+    CustomFunctionInfo m_customFunctionInfo;
 
     void setupTrace();
     PerformanceTrace m_performanceTrace;

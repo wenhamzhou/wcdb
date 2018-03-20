@@ -43,6 +43,9 @@
 #include <WCDB/statement_create_index.hpp>
 #include <WCDB/statement_create_table.hpp>
 #include <WCDB/statement_create_virtual_table.hpp>
+#include <WCDB/statement_create_trigger.hpp>
+#include <WCDB/statement_drop_trigger.hpp>
+#include <WCDB/statement_trigger.hpp>
 #include <WCDB/statement_delete.hpp>
 #include <WCDB/statement_detach.hpp>
 #include <WCDB/statement_drop_index.hpp>

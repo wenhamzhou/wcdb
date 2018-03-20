@@ -17,47 +17,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-#ifndef statement_hpp
-#define statement_hpp
-
-#include <WCDB/describable.hpp>
+#include <WCDB/statement_drop_trigger.hpp>
 
 namespace WCDB {
+    
+StatementDropTrigger StatementDropTrigger::drop(const std::string &name, bool ifExists)
+{
+    m_description.append("DROP TRIGGER ");
+    if (ifExists) {
+        m_description.append("IF EXISTS ");
+    }
+    m_description.append(name);
+    return *this;
+}
 
-class Statement : public Describable {
-public:
-    enum class Type : int {
-        None = 0,
-        AlterTable,
-        CreateIndex,
-        CreateTable,
-        Delete,
-        DropIndex,
-        DropTable,
-        Insert,
-        Pragma,
-        Select,
-        Transaction,
-        Update,
-        CreateVirtualTable,
-        Attach,
-        Detach,
-        Explain,
-        Savepoint,
-        Release,
-        Rollback,
-        Vacuum,
-        Reindex,
-        CreateTrigger,
-        DropTrigger,
-        Trigger,
-    };
-    Statement();
-    virtual ~Statement();
-    virtual Statement::Type getStatementType() const = 0;
-};
+Statement::Type StatementDropTrigger::getStatementType() const
+{
+    return Statement::Type::DropTrigger;
+}
 
 } //namespace WCDB
-
-#endif /* statement_hpp */

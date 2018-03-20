@@ -37,6 +37,7 @@ const std::string Database::defaultCheckpointConfigName = "checkpoint";
 const std::string Database::defaultSynchronousConfigName = "synchronous";
 const std::string Database::defaultTokenizeConfigName = "tokenize";
 const std::string Database::defaultUpdateHookConfigName = "updatehook";
+const std::string Database::defaultCreateFunctionConfigName = "createfunction";
 std::shared_ptr<PerformanceTrace> Database::s_globalPerformanceTrace = nullptr;
 std::shared_ptr<SQLTrace> Database::s_globalSQLTrace = nullptr;
 std::shared_ptr<UpdatedHook> Database::s_globalUpdatedHook = nullptr;
@@ -308,6 +309,17 @@ void Database::setUpdateHook(const UpdatedHook &updateHook)
                       Database::defaultUpdateHookConfigName,
                       [updateHook](std::shared_ptr<Handle> &handle, Error &error) -> bool {
                           handle->registerUpdatedHook(updateHook, nullptr);
+                          return true;
+                      });
+}
+    
+    
+void Database::createFunction(const char *zFunctionName, const CustomFunction &customFunction)
+{
+    m_pool->setConfig(
+                      Database::defaultCreateFunctionConfigName,
+                      [zFunctionName,customFunction](std::shared_ptr<Handle> &handle, Error &error) -> bool {
+                          handle->createFunction(zFunctionName, customFunction, nullptr);
                           return true;
                       });
 }

@@ -304,6 +304,37 @@ void Handle::registerUpdatedHook(const UpdatedHook &onUpdated, void *info)
         sqlite3_update_hook((sqlite3 *) m_handle, nullptr, nullptr);
     }
 }
+    
+void Handle::createFunction(const char *zFunctionName, const CustomFunction &function, void *info)
+{
+    m_customFunctionInfo.customFunction = function;
+    m_customFunctionInfo.info = info;
+    m_customFunctionInfo.handle = this;
+    if (m_customFunctionInfo.customFunction) {
+       int ret = sqlite3_create_function(
+                                (sqlite3 *) m_handle,
+                                zFunctionName,
+                                -1,
+                                SQLITE_UTF8,
+                                &m_customFunctionInfo,
+                                [](sqlite3_context *context, int argc, sqlite3_value **argv) -> void {
+                                    CustomFunctionInfo *customFunctionInfo = (CustomFunctionInfo *)sqlite3_user_data(context);
+                                    customFunctionInfo->customFunction(customFunctionInfo->handle, (void *)context, argc, (void **)argv);
+                                },
+                                nullptr,
+                                nullptr);
+    } else {
+        sqlite3_create_function(
+                               (sqlite3 *) m_handle,
+                               zFunctionName,
+                               -1,
+                               SQLITE_UTF8,
+                               nullptr,
+                               nullptr,
+                               nullptr,
+                               nullptr);
+    }
+}
 
 std::string Handle::getBackupPath() const
 {

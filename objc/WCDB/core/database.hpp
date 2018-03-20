@@ -68,6 +68,7 @@ public:
     static const std::string defaultSynchronousConfigName;
     static const std::string defaultTokenizeConfigName;
     static const std::string defaultUpdateHookConfigName;
+    static const std::string defaultCreateFunctionConfigName;
     static const Configs defaultConfigs;
     void setConfig(const std::string &name,
                    const Config &config,
@@ -78,6 +79,7 @@ public:
     void setTokenizes(const std::list<std::string> &tokenizeNames);
     void setPerformanceTrace(const PerformanceTrace &trace);
     void setUpdateHook(const UpdatedHook &updateHook);
+    void createFunction(const char *zFunctionName, const CustomFunction &customFunction);
     static void SetGlobalPerformanceTrace(const PerformanceTrace &globalTrace);
     static void SetGlobalSQLTrace(const SQLTrace &globalTrace);
     static void SetGlobalUpdateHook(const UpdatedHook &globalUpdateHook);

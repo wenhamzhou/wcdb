@@ -99,6 +99,20 @@
  */
 - (BOOL)dropIndexOfName:(NSString *)indexName;
 
+
+/**
+ Create trigger.
+ */
+- (BOOL)createTriggerOfName:(NSString *)triggerName type:(WCTTriggerType)type when:(const WCTCondition &)when forTable:(NSString *)tableName statement:(const WCDB::Statement &)statement;
+
+/**
+ Drop trigger.
+ 
+ @param triggerName The name of the trigger to be dropped.
+ @return YES only if no error occurs.
+ */
+- (BOOL)dropTriggerOfName:(NSString *)triggerName;
+
 /**
  @brief Add column.
  @param columnDef The definition of column to be added.

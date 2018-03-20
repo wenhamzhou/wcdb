@@ -43,4 +43,8 @@
 
 - (BOOL)dropIndexOfName:(NSString *)indexName withError:(WCDB::Error &)error;
 
+- (BOOL)createTriggerOfName:(NSString *)triggerName type:(WCTTriggerType)type when:(const WCTCondition &)when forTable:(NSString *)tableName statement:(const WCDB::Statement &)statement andError:(WCDB::Error &)error;
+
+- (BOOL)dropTriggerOfName:(NSString *)triggerName withError:(WCDB::Error &)error;
+
 @end
